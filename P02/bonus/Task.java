@@ -25,7 +25,7 @@ public class Task {
         for (int i = 1; i < length; i++) {
             for (int j = 0; j < length; j++) {
                 if (list[j].isPriority(i)){
-                    System.out.println(list[j].toString());
+                    System.out.println( list[j].toString());
                 }
             }
         }
