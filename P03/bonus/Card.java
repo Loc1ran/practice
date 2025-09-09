@@ -1,4 +1,4 @@
-package P03.full_credit;
+package P03.bonus;
 
 public class Card {
     private String term;
