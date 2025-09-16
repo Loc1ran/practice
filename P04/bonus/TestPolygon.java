@@ -1,6 +1,5 @@
-package P04.full_credit;
+package P04.bonus;
 
-import java.util.Optional;
 import java.util.Random;
 import java.util.Scanner;
 

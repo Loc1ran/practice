@@ -1,4 +1,4 @@
-package P04.full_credit;
+package P04.bonus;
 
 public class Polygon {
     private static final int MAX_SIDES = 12;
@@ -45,6 +45,7 @@ public class Polygon {
                 result += ", ";
             }
         }
+
         return result + "]";
     }
 

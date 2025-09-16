@@ -1,0 +1,15 @@
+@startuml
+set separator none
+skinparam classAttributeIconSize 0
+hide circle
+
+class Polygon{
+    + {static} MAX_SIDES : int <<final>>
+    - numSides : int
+    - points: Point[]
+    + addPoint(point : Point)
+    + perimeter() : double
+    + toString() : String <<override>>
+    - {static} lineLength(p1 : Point, p2 : Point) : double
+}
+@enduml
