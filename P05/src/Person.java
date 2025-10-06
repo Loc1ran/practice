@@ -1,14 +1,20 @@
 package P05.src;
 
+import P06.src.Rateable;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Person {
+public class Person implements Rateable{
     private String name;
     private String email;
+    private List<Rating> ratings;
 
     public Person(String name, String email) {
         this.name = name;
         this.email = email;
+        ratings = new ArrayList<>();
     }
 
     public String getName() {
@@ -32,5 +38,24 @@ public class Person {
     @Override
     public int hashCode() {
         return Objects.hash(name, email);
+    }
+
+    @Override
+    public void addRating(Rating rating) {
+        ratings.add(rating);
+    }
+
+    @Override
+    public double getAverageRating() {
+        double avgRating = 0;
+        for (Rating rating : ratings) {
+            avgRating += rating.getStars();
+        }
+        return avgRating/ratings.size();
+    }
+
+    @Override
+    public Rating[] getRatings() {
+        return ratings.toArray(new Rating[0]);
     }
 }
