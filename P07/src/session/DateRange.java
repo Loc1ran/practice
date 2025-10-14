@@ -1,9 +1,23 @@
 package P07.src.session;
 
+/**
+ * Tracks tutoring sessions
+ * @author Loc Tran
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class DateRange {
     private String date;
     private String startTime;
     private String endTime;
+
+    /**
+     * Constructor with date and time
+     * @param date YYYY:MM:DD
+     * @param startTime HH:MM
+     * @param endTime HH:MM
+     */
 
     public DateRange(String date, String startTime, String endTime) {
         this.date = date;
@@ -11,6 +25,12 @@ public class DateRange {
         this.endTime = endTime;
     }
 
+    /**
+     * Constructor calculates end time given duration
+     * @param date YYYY:MM:DD
+     * @param startTime HH:MM
+     * @param duration MM
+     */
     public DateRange(String date, String startTime, long duration) {
         this.date = date;
         this.startTime = startTime;
@@ -29,6 +49,11 @@ public class DateRange {
 
     }
 
+    /**
+     * Calculates duration
+     * @return duration in long
+     */
+
     public long duration() {
         String[] time = startTime.split(":");
         int hours = Integer.parseInt(time[0]);
@@ -42,6 +67,11 @@ public class DateRange {
 
         return endTotal - total;
     }
+
+    /**
+     * return string of DateRange
+     * @return a string of date, time and duration
+     */
 
     @Override
     public String toString() {
