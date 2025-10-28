@@ -177,7 +177,7 @@ public class MavTutor {
                 }
                 Student student = students.get(choice);
                 session.addStudent(student);
-                menu.result.append("\n  Student added to session.");
+                menu.result.append("\nStudent added to session.");
             }
         }
 
