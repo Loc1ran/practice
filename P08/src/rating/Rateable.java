@@ -1,4 +1,4 @@
-package P07.src.rating;
+package P08.src.rating;
 
 public interface Rateable {
     void addRating(Rating rating);
