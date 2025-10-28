@@ -31,7 +31,7 @@ public class MavTutor {
         menu = new Menu(
                 new Object[] {clearScreen, title},  // pre
                 new Object[] {this, "\nSelection? "}, // post
-                new MenuItem("Quit\n", this::quit),
+                new MenuItem("Quit", this::quit),
                 new MenuItem("View Courses", () -> selectView(courses)),
                 new MenuItem("View Tutors", () -> selectView(tutors)),
                 new MenuItem("View Students", () -> selectView(students)),
