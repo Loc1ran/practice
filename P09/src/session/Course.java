@@ -1,8 +1,9 @@
-package P08.src.session;
+package P09.src.session;
 
-import P09.src.session.InvalidCourseException;
-
+import java.io.File;
+import java.io.PrintStream;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class Course {
     private String dept;
@@ -18,6 +19,16 @@ public class Course {
         }
         this.dept = dept;
         this.number = number;
+    }
+
+    public Course(Scanner in){
+        dept = in.nextLine();
+        number = in.nextInt(); in.nextLine();
+    }
+
+    public void save(PrintStream out){
+        out.println(dept);
+        out.println(number);
     }
 
     @Override
