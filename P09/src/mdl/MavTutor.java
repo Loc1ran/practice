@@ -8,8 +8,11 @@ import P09.src.session.Course;
 import P09.src.session.Session;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class MavTutor {
     private final Menu menu;
@@ -25,6 +28,7 @@ public class MavTutor {
         this.students = new ArrayList<>();
         this.tutors = new ArrayList<>();
         this.sessions = new ArrayList<>();
+        file = null;
         view = courses;
         String clearScreen = "\n".repeat(50);
         String title = "MavTutor - Tutoring Management System";
@@ -41,7 +45,11 @@ public class MavTutor {
                 new MenuItem("Create Course", this::newCourse),
                 new MenuItem("Create Tutor", this::newTutor),
                 new MenuItem("Create Student", this::newStudent),
-                new MenuItem("Create Session", this::newSession)
+                new MenuItem("Create Session", this::newSession),
+                new MenuItem("New Data", this::newz),
+                new MenuItem("Saving File", this::save),
+                new MenuItem("Saving File As", this::saveAs),
+                new MenuItem("Open File", this::open)
         );
 
         menu.run();
@@ -188,19 +196,86 @@ public class MavTutor {
     }
 
     private void newz(){
-
+        courses.clear();
+        students.clear();
+        tutors.clear();
+        sessions.clear();
+        file = null;
+        menu.result.append("\nNew Data Clear.");
     }
 
-    private void save(){
+    private void save() {
+        if (file == null) {
+            Menu.selectFile("Select a file to save", file, null);
+        }
+
+        try(PrintStream out = new PrintStream(file)) {
+
+            out.println(courses.size());
+            for ( Course c : courses ){
+                c.save(out);
+            }
+
+            out.println(students.size());
+            for ( Student s : students ){
+                s.save(out);
+            }
+
+            out.println(tutors.size());
+            for ( Tutor t : tutors ){
+                t.save(out);
+            }
+
+            out.println(sessions.size());
+            for ( Session s : sessions ){
+                s.save(out);
+            }
+
+            menu.result.append("\nNew Data Saved.");
+
+        } catch (FileNotFoundException e) {
+            menu.result.append("\nError saving file: ").append(e.getMessage());
+        }
 
     }
 
     private void saveAs(){
-
+        file = null;
+        save();
     }
 
     private void open(){
+        File selectedFile = Menu.selectFile("Select a File", file, null);
 
+        if (selectedFile != null) {
+            try(Scanner in = new Scanner(selectedFile)) {
+                newz();
+
+                int courseS = in.nextInt(); in.nextLine();
+                for (int i = 0; i <courseS; i++) {
+                    courses.add(new Course(in));
+                }
+
+                int studentS = in.nextInt(); in.nextLine();
+                for (int i = 0; i <studentS; i++) {
+                    students.add(new Student(in));
+                }
+
+                int tutorS = in.nextInt(); in.nextLine();
+                for (int i = 0; i < tutorS; i++) {
+                    tutors.add(new Tutor(in));
+                }
+
+                int sessionS = in.nextInt(); in.nextLine();
+                for (int i = 0; i < sessionS; i++) {
+                    sessions.add(new Session(in));
+                }
+
+                menu.result.append("\n File open successfully");
+            } catch (FileNotFoundException e) {
+                menu.result.append("\nError open file: ").append(e.getMessage());
+            }
+        }
     }
 
 
