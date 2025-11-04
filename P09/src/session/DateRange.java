@@ -1,5 +1,8 @@
 package P09.src.session;
 
+import java.io.PrintStream;
+import java.util.Scanner;
+
 /**
  * Tracks tutoring sessions
  * @author Loc Tran
@@ -8,9 +11,9 @@ package P09.src.session;
  */
 
 public class DateRange {
-    private String date;
-    private String startTime;
-    private String endTime;
+    private final String date;
+    private final String startTime;
+    private final String endTime;
 
     /**
      * Constructor with date and time
@@ -47,6 +50,20 @@ public class DateRange {
         this.endTime = String.format("%02d:%02d", totalH, totalM);
 
 
+    }
+
+
+    public DateRange(Scanner in){
+        date = in.nextLine();
+        startTime = in.nextLine();
+        endTime = in.nextLine();
+    }
+
+
+    public void save(PrintStream out){
+        out.println(date);
+        out.println(startTime);
+        out.println(endTime);
     }
 
     /**

@@ -3,8 +3,10 @@ package P09.src.session;
 import P09.src.people.Student;
 import P09.src.people.Tutor;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Tutoring Session
@@ -27,6 +29,31 @@ public class Session {
         this.course = course;
         this.tutor = tutor;
         this.students = new ArrayList<>();
+    }
+
+    public Session(Scanner in){
+        this.course = new Course(in);
+        this.dates = new DateRange(in);
+        this.tutor = new Tutor(in);
+        int size = in.nextInt(); in.nextLine();
+        this.students = new ArrayList<>();
+
+        for (int i = 0; i < size; i++) {
+            this.students.add(new Student(in));
+        }
+
+    }
+
+    public void save(PrintStream out){
+        course.save(out);
+        dates.save(out);
+        tutor.save(out);
+
+        out.println(students.size());
+
+        for (Student student : students) {
+            student.save(out);
+        }
     }
 
     /**

@@ -1,11 +1,13 @@
 package P09.src.people;
 
-import P08.src.rating.Rateable;
+import P09.src.rating.Rateable;
 import P09.src.rating.Rating;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class Person implements Rateable {
     private String name;
@@ -16,6 +18,16 @@ public class Person implements Rateable {
         this.name = name;
         this.email = email;
         ratings = new ArrayList<>();
+    }
+
+    public Person(Scanner in){
+        this.name = in.nextLine();
+        this.email = in.nextLine();
+    }
+
+    public void save(PrintStream out){
+        out.println(name);
+        out.println(email);
     }
 
     public String getName() {
