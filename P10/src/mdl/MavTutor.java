@@ -2,6 +2,7 @@ package P10.src.mdl;
 
 import P10.src.menu.Menu;
 import P10.src.menu.MenuItem;
+import P10.src.people.Person;
 import P10.src.people.Student;
 import P10.src.people.Tutor;
 import P10.src.rating.Rateable;
@@ -50,7 +51,10 @@ public class MavTutor {
                 new MenuItem("New Data", this::newz),
                 new MenuItem("Saving File", this::save),
                 new MenuItem("Saving File As", this::saveAs),
-                new MenuItem("Open File", this::open)
+                new MenuItem("Open File", this::open),
+                new MenuItem("Review Students", () -> review(students)),
+                new MenuItem("Review Tutors", () -> review(tutors)),
+                new MenuItem("Review Sessions", () -> review(sessions))
         );
 
         menu.run();
@@ -276,6 +280,47 @@ public class MavTutor {
             } catch (FileNotFoundException e) {
                 menu.result.append("\nError open file: ").append(e.getMessage());
             }
+        }
+    }
+
+    private void review(List<? extends Rateable> list){
+        Integer i = Menu.selectItemFromList("Select item", list);
+
+        menu.result.append("\nAverage Rating: ").append(list.get(i).getAverageRating());
+
+    }
+
+    private Person login(){
+        String[] login = new String[] {"Login as Tutor", "Login as Student"};
+        Integer loginChoice = Menu.selectItemFromArray("Select Login Prefer", login);
+
+        if (loginChoice == null || loginChoice >= login.length ) {
+            menu.result.append("\nInvalid Login Prefer");
+            return null;
+        }
+
+        if (loginChoice == 0){
+            if (tutors.isEmpty()) {
+                menu.result.append("\nNo tutors available.");
+                return null;
+            }
+            Integer tutor = Menu.selectItemFromList("Select Tutor", tutors);
+            if (tutor == null || tutor >= tutors.size()) {
+                menu.result.append("\nInvalid Tutor Index");
+                return null;
+            }
+            return tutors.get(tutor);
+        } else{
+            if (students.isEmpty()) {
+                menu.result.append("\nNo students available.");
+                return null;
+            }
+            Integer student = Menu.selectItemFromList("Select Student", students);
+            if (student == null ||  student >= students.size()) {
+                menu.result.append("\nInvalid Student Index");
+                return null;
+            }
+            return students.get(student);
         }
     }
 }
