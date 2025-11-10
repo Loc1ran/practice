@@ -5,7 +5,9 @@ import P10.src.menu.MenuItem;
 import P10.src.people.Person;
 import P10.src.people.Student;
 import P10.src.people.Tutor;
+import P10.src.rating.Comment;
 import P10.src.rating.Rateable;
+import P10.src.rating.Rating;
 import P10.src.session.Course;
 import P10.src.session.Session;
 
@@ -284,9 +286,32 @@ public class MavTutor {
     }
 
     private void review(List<? extends Rateable> list){
-        Integer i = Menu.selectItemFromList("Select item", list);
+        Integer i = Menu.selectItemFromList("Select item to check average rating", list);
 
-        menu.result.append("\nAverage Rating: ").append(list.get(i).getAverageRating());
+        Rateable rate = list.get(i);
+        menu.result.append("\nAverage Rating: ").append(rate.getAverageRating());
+
+        Person person = login();
+
+        if (person != null) {
+            String addRating = Menu.getString("Would you like to add a new rating? (y/n): ");
+
+            if (addRating.equalsIgnoreCase("y")) {
+                int stars = Menu.getInt("Add Rating Stars (1 to 5)");
+                String text = Menu.getString("Add Comment");
+                Comment comment = new Comment(text, person, null);
+
+                Rating rating = new Rating(stars, comment);
+
+                rate.addRating(rating);
+                menu.result.append("\nRating added");
+            }
+        }
+
+        Integer selectRating =  Menu.selectItemFromArray("Select Rating", rate.getRatings());
+
+        Rating selectedRating = rate.getRatings()[selectRating];
+        Comment comment = selectedRating.getReview();
 
     }
 
@@ -322,5 +347,18 @@ public class MavTutor {
             }
             return students.get(student);
         }
+    }
+
+    private static void printIndented(String multiline, int level) {
+        String[] strings = multiline.split("\n");
+        for(String s : strings)
+            System.out.println("  ".repeat(level) + s);
+    }
+
+    private static void printExpandedComments(Comment c, int level) {
+        printIndented(c.toString(), level);
+        System.out.println("\n");
+        for(int i=0; i<c.numReplies(); ++i)
+            printExpandedComments(c.getReply(i), level+1);
     }
 }
