@@ -311,8 +311,53 @@ public class MavTutor {
         Integer selectRating =  Menu.selectItemFromArray("Select Rating", rate.getRatings());
 
         Rating selectedRating = rate.getRatings()[selectRating];
-        Comment comment = selectedRating.getReview();
+        Comment root = selectedRating.getReview();
 
+        if (root == null) {
+            menu.result.append("\nNo comments available.");
+            return;
+        }
+
+        while (true){
+            menu.result.append("\n").append("=".repeat(50));
+            printExpandedComments(root, 0);
+            menu.result.append("\n").append("=".repeat(20));
+
+            List<String> options = new ArrayList<>();
+
+            options.add("Reply to current comment");
+            options.add("Go up to parent comment");
+            options.add("Go down to a reply");
+            options.add("Return to Main Menu");
+
+            Integer choice =  Menu.selectItemFromList("Select Rating", options);
+
+            if(choice == 0){
+                if( person == null ){
+                    menu.result.append("\nYou need to login to reply");
+                    person = login();
+                }
+
+                String reply =  Menu.getString("Add Reply");
+                root.addReply(reply, person);
+                menu.result.append("\nReply added");
+            } else if (choice == 1){
+                if (root.getInReplyTo() == null) {
+                    menu.result.append("\n no comments available.");
+                    return;
+                }
+                root = root.getInReplyTo();
+            } else if (choice == 2){
+                if ( root.numReplies() == 0 ){
+                    root = root.getReply(0);
+                } else {
+                    int replyIndex = Menu.getInt("Select reply (0 to " + (root.numReplies() - 1) + "): ");
+                    root = root.getReply(replyIndex);
+                }
+            } else{
+                return;
+            }
+        }
     }
 
     private Person login(){
