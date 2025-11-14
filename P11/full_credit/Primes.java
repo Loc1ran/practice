@@ -15,13 +15,13 @@ public class Primes {
     }
 
     public boolean isPrime(long number) {
-        if (number == 0) {
+        if (number <= 0) {
             return false;
         }
 
         int count = 0;
 
-        for (long i = 2; i <= number; i++) {
+        for (long i = 1; i <= number; i++) {
             if ( number % i == 0 ) {
                 count++;
             }
@@ -51,13 +51,14 @@ public class Primes {
 
     protected void findPrimes(long begin, long end , int threadID){
         Qlogger.log("begin");
-        Qlogger.log("end");
 
         for (long i = begin; i < end; i++) {
             if (isPrime(i)) {
                 addPrime(i, threadID);
             }
         }
+
+        Qlogger.log("end");
     }
 
     protected void addPrime(long prime, int threadID){
