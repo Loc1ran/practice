@@ -5,7 +5,7 @@ public class InvalidCourseException extends IllegalArgumentException{
         super("Invalid dept in new Course: " + dept);
     }
 
-    public InvalidCourseException(String dept, int num) {
-        super("Invalid course number " + num + " in new Course: " + dept);
+    public InvalidCourseException(String dept, int numThreads) {
+        super("Invalid course numThreadsber " + num + " in new Course: " + dept);
     }
 }
