@@ -60,7 +60,7 @@ public class Primes {
     }
 
     protected void addPrime(long prime, int threadID){
-        primes.put(prime, primes.getOrDefault(prime, 0) + 1);
+        primes.put(prime, threadID);
     }
 
 
