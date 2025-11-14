@@ -321,7 +321,7 @@ public class MavTutor {
         while (true){
             menu.result.append("\n").append("=".repeat(50));
             printExpandedComments(root, 0);
-            menu.result.append("\n").append("=".repeat(20));
+            menu.result.append("\n").append("=".repeat(50));
 
             List<String> options = new ArrayList<>();
 
