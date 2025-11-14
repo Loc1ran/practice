@@ -10,11 +10,12 @@ public class Primes {
     private final Map<Long, Integer> primes;
 
     public Primes() {
+        maxPrimes = 0;
         primes = new TreeMap<>();
     }
 
     public boolean isPrime(long number) {
-        if (maxPrimes == 0) {
+        if (number == 0) {
             return false;
         }
 
@@ -52,7 +53,7 @@ public class Primes {
         Qlogger.log("begin");
         Qlogger.log("end");
 
-        for (long i = begin+1; i <= end; i++) {
+        for (long i = begin; i < end; i++) {
             if (isPrime(i)) {
                 addPrime(i, threadID);
             }
@@ -60,6 +61,7 @@ public class Primes {
     }
 
     protected void addPrime(long prime, int threadID){
+        maxPrimes = Math.max(maxPrimes, prime);
         primes.put(prime, threadID);
     }
 
